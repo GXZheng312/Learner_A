@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
+import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.ConceptProperty;
@@ -45,20 +46,22 @@ public class Controller {
 			ArrayList<ConceptProperty> arr = new ArrayList<ConceptProperty>();
 
 			for (String s : Files.readAllLines(file.toPath(), StandardCharsets.UTF_8)) {
-				String[] parts = s.split(",");
-				String hanzi, pinyin, explain;
-				
-				hanzi = parts[0];
-				pinyin = parts[1];
-				
-				if(parts.length > 2 ) {
-					explain = parts[2];
-				} else {
-					explain = "";
+				if(s.length() > 0 && s.contains(",")) {
+					String[] parts = s.split(",");
+					String hanzi, pinyin, explain;
+					
+					hanzi = parts[0];
+					pinyin = parts[1];
+					
+					if(parts.length > 2 ) {
+						explain = parts[2];
+					} else {
+						explain = "";
+					}
+					ConceptProperty conceptProperty = new ConceptProperty(hanzi, pinyin, explain);
+					
+					arr.add(conceptProperty);
 				}
-				ConceptProperty conceptProperty = new ConceptProperty(hanzi, pinyin, explain);
-				
-				arr.add(conceptProperty);
 			}
 
 			this.teach.getFile().setConcepts(arr);
@@ -71,17 +74,19 @@ public class Controller {
 	}
 
 	public void resetConcept() {
-		MyFile file = this.teach.getFile();
-
-		file.getCounterProperty().set(file.getConcepts().size());
-
-		int fileIndex = file.getConcepts().size() - file.getCounterProperty().get();
-
-		this.teach.setProperty(file.getConcepts().get(fileIndex));
-
-		this.teach.shuffle();
-
-		nextConcept();
+		if(this.teach.getFile().getFileLocation().length() > 0) {
+			MyFile file = this.teach.getFile();
+	
+			file.getCounterProperty().set(file.getConcepts().size());
+	
+			int fileIndex = file.getConcepts().size() - file.getCounterProperty().get();
+	
+			this.teach.setProperty(file.getConcepts().get(fileIndex));
+	
+			this.teach.shuffle();
+	
+			nextConcept();
+		}
 	}
 
 	public void nextConcept() {
@@ -97,6 +102,19 @@ public class Controller {
 
 		this.teach.setProperty(file.getConcepts().get(fileIndex));
 
+	}
+
+	public void swapSlideCover(Button btnSwitch) {
+		this.teach.setRightSlide(!this.teach.isRightSlide());
+		
+		if(this.teach.isRightSlide()) {
+			btnSwitch.setText("Hanzi");
+		} else {
+			btnSwitch.setText("PinYin");
+		}
+		
+		this.myScene.swapSlideCover(this.teach.isRightSlide());
+	
 	}
 
 }

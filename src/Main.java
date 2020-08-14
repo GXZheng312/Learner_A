@@ -18,6 +18,7 @@ public class Main extends Application {
 		
 		controller.loadScene(myScene);
 		
+		stage.setResizable(false);
 		stage.setScene(myScene);
 		stage.setTitle(TITLE);
 		stage.show();

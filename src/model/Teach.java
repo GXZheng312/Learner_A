@@ -12,6 +12,7 @@ public class Teach {
 
 	private MyFile file;
 
+	private boolean isRightSlide;
 	private StringProperty hanziProperty;
 	private StringProperty pinYinProperty;
 	private StringProperty infoProperty;
@@ -20,7 +21,8 @@ public class Teach {
 		this.hanziProperty = new SimpleStringProperty(this, "hanzi");
 		this.pinYinProperty = new SimpleStringProperty(this, "pinYin");
 		this.infoProperty = new SimpleStringProperty(this, "info");
-
+		this.setRightSlide(true);
+		
 		this.file = new MyFile();
 	}
 
@@ -50,5 +52,13 @@ public class Teach {
 
 	public StringProperty getInfoProperty() {
 		return infoProperty;
+	}
+
+	public boolean isRightSlide() {
+		return isRightSlide;
+	}
+
+	public void setRightSlide(boolean isRightSlide) {
+		this.isRightSlide = isRightSlide;
 	}
 }

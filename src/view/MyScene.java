@@ -7,12 +7,15 @@ import model.Teach;
 
 public class MyScene extends Scene {
 	
+	public final static double MIN_HEIGHT = 480;
+	public final static double MIN_WIDTH = 640;
+	
 	private InfoBar infoBar;
 	private CenterView centerView;
 	private BottomView bottomView;
 	
 	public MyScene(Controller controller) {
-		super(new BorderPane());
+		super(new BorderPane(), MIN_WIDTH, MIN_HEIGHT);
 		BorderPane root = (BorderPane)this.getRoot();
 		
 		this.infoBar = new InfoBar();
@@ -30,4 +33,7 @@ public class MyScene extends Scene {
 		this.centerView.load(teach);
 	}
 
+	public void swapSlideCover(Boolean isRightSlide) {
+		this.centerView.swapSlideCover(isRightSlide);
+	}
 }
